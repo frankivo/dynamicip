@@ -7,7 +7,6 @@ def patch(domain: str, record: str, ip: str, token: str) -> None:
 
     with niquests.patch(url, json=payload, headers=headers) as req:
         req.raise_for_status()
-        print(req.status_code)
 
 def get_payload(ip: str, record: str) -> dict:
     return {
