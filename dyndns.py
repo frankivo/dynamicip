@@ -1,4 +1,5 @@
-from lib import ip, transip, util
+from lib import ip, util
+from lib.transip import transip
 
 import os
 import time
@@ -8,6 +9,9 @@ def main():
     DOMAIN = os.environ["DOMAIN"]
     DOMAIN_RECORD = os.environ["DOMAIN_RECORD"]
     SLEEP_TIME_SECONDS = int(os.getenv("SLEEP_TIME_SECONDS", "3600")) # Default: 1 hour
+    KEY = os.environ["KEY"]
+
+    dns = transip(KEY)
 
     my_ip = "0.0.0.0"
 

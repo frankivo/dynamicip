@@ -3,4 +3,4 @@ def try_load_dotenv():
         from dotenv import load_dotenv
         load_dotenv()
     except:
-        print("failed to load dotenv")
+        pass
