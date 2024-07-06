@@ -1,0 +1,9 @@
+charset-normalizer==3.3.2
+h11==0.14.0
+idna==3.7
+jh2==5.0.3
+kiss-headers==2.4.3
+niquests==3.7.0
+qh3==1.0.8
+urllib3-future==2.8.901
+wassima==1.1.1
