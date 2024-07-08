@@ -27,9 +27,7 @@ class transip:
         def __auth(self):
             payload = self.__get_payload()
             signature = crypto.sign(self.key, json.dumps(payload))
-            print(payload)
             headers = { "Signature": signature }
-            print(headers)
 
             with niquests.post("https://api.transip.nl/v6/auth", json=payload, headers=headers) as req:
                 req.raise_for_status()
@@ -59,7 +57,7 @@ class transip:
 
         with niquests.patch(url, json=payload, headers=headers) as req:
             req.raise_for_status()
-            print(req.status_code)
+            print(f"ip updated: {ip}")
 
     def __get_payload(self, ip: str) -> dict:
         return {
