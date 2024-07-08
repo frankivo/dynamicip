@@ -1,37 +1,51 @@
 from . import crypto
+from datetime import datetime
 
 import niquests
 
 class transip:
-    def __init__(self, key: str) -> None:
-        self.key = key
-        self.sign(key, "test")
+    def __init__(self, private_key: str, domain: str, record: str) -> None:
+        self.token = transip.token_handler(private_key, domain, record)
 
-    def patch(self, domain: str, record: str, ip: str, token: str) -> None:
-        headers = self.get_headers(token)
-        payload = self.get_payload(ip, record)
-        url = f"https://api.transip.nl/v6/domains/{domain}/dns"
+    class token_handler:
+        def __init__(self, key: str, domain: str, record: str) -> None:
+            self.domain = domain
+            self.record = record
+            self.key = key
+
+            self.token_bearer = None
+            self.token_expire = datetime.now()
+
+        def get(self) -> str:
+            if self.__is_expired():
+                self.__auth()
+            return self.token_bearer
+        
+        def __auth(self):
+            pass
+
+        def __is_expired(self) -> bool:
+            return datetime.now() > self.token_expire
+
+    def patch(self, ip: str) -> None:
+        headers = self.__get_headers()
+        payload = self.__get_payload(ip)
+        url = f"https://api.transip.nl/v6/domains/{self.domain}/dns"
 
         with niquests.patch(url, json=payload, headers=headers) as req:
             req.raise_for_status()
 
-    def get_payload(self, ip: str, record: str) -> dict:
+    def __get_payload(self, ip: str) -> dict:
         return {
             "dnsEntry": {
-                "name": record,
+                "name": self.record,
                 "content": ip,
                 "expire": 300,
                 "type": "A"
             }
         }
 
-    def get_headers(self, token: str) -> dict:
+    def __get_headers(self) -> dict:
         return {
-            "Authorization":f"Bearer {token}"
+            "Authorization":f"Bearer {self.token.get()}"
         }
-
-    def auth():
-        pass
-
-    def sign(self, key: str, data: str) -> str:
-        crypto.sign(key, data)

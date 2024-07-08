@@ -5,13 +5,12 @@ import os
 import time
 
 def main():
-    BEARER_TOKEN = os.environ["BEARER_TOKEN"]
     DOMAIN = os.environ["DOMAIN"]
     DOMAIN_RECORD = os.environ["DOMAIN_RECORD"]
     SLEEP_TIME_SECONDS = int(os.getenv("SLEEP_TIME_SECONDS", "3600")) # Default: 1 hour
     KEY = os.environ["KEY"]
 
-    dns = transip(KEY)
+    dns = transip(private_key=KEY, domain=DOMAIN, record=DOMAIN_RECORD)
 
     my_ip = "0.0.0.0"
 
@@ -22,7 +21,7 @@ def main():
         if not current_ip == my_ip:
             print(f"new ip: {current_ip}")
             my_ip = current_ip
-            transip.patch(DOMAIN, DOMAIN_RECORD, my_ip, BEARER_TOKEN)
+            dns.patch(my_ip)
 
 
 if __name__ == '__main__':
