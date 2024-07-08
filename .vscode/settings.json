@@ -1,8 +1,4 @@
 {
     "editor.renderWhitespace": "all",
-    "files.exclude": {
-        "**/.git": true,
-        "**/__pycache__": true,
-        ".venv": true
-    }
+    "explorer.excludeGitIgnore": true
 }
