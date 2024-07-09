@@ -5,7 +5,7 @@ h11==0.14.0
 idna==3.7
 jh2==5.0.3
 kiss-headers==2.4.3
-niquests==3.7.1
+niquests==3.7.2
 pycparser==2.22
 pyOpenSSL==24.1.0
 qh3==1.0.8

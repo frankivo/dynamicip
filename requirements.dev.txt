@@ -1,2 +1,2 @@
-niquests==3.7.1
+niquests==3.7.2
 pyOpenSSL==24.1.0
