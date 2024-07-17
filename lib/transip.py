@@ -1,4 +1,4 @@
-from . import crypto
+from . import util
 from datetime import datetime, timedelta
 
 import json
@@ -26,7 +26,7 @@ class transip:
         
         def __auth(self):
             payload = self.__get_payload()
-            signature = crypto.sign(self.key, json.dumps(payload))
+            signature = util.sign_with_private_key(self.key, json.dumps(payload))
             headers = { "Signature": signature }
 
             with niquests.post("https://api.transip.nl/v6/auth", json=payload, headers=headers) as req:
