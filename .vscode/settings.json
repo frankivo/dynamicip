@@ -1,4 +1,11 @@
 {
     "editor.renderWhitespace": "all",
-    "explorer.excludeGitIgnore": true
+
+    "files.exclude": {
+        "**/.git": true,
+        ".venv": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
 }
