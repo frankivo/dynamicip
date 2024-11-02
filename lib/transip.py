@@ -23,7 +23,7 @@ class transip:
             if self.__is_expired():
                 self.__auth()
             return self.token_bearer
-        
+
         def __auth(self):
             payload = self.__get_payload()
             signature = util.sign_with_private_key(self.key, json.dumps(payload))
@@ -43,7 +43,7 @@ class transip:
                 "label": f"dyndns {datetime.now()}",
                 "global_key": True
             }
-        
+
         def __nonce(self) -> str:
             return str(uuid.uuid4()).replace("-", "")
 
@@ -60,12 +60,14 @@ class transip:
             print(f"ip updated: {ip}")
 
     def __get_payload(self, ip: str) -> dict:
+        type = "A" if "." in ip else "AAAA"
+
         return {
             "dnsEntry": {
                 "name": self.record,
                 "content": ip,
                 "expire": 300,
-                "type": "A"
+                "type": type
             }
         }
 
