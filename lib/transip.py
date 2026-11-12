@@ -1,9 +1,11 @@
-from . import util
+import json
+import uuid
 from datetime import datetime, timedelta
 
-import json
 import niquests
-import uuid
+
+from . import util
+
 
 class transip:
     def __init__(self, private_key: str, domain: str, record: str, login: str) -> None:

@@ -1,8 +1,9 @@
+import os
+import time
+
 from lib import util
 from lib.transip import transip
 
-import os
-import time
 
 def main():
     SLEEP_TIME_SECONDS = int(os.getenv("SLEEP_TIME_SECONDS", "3600")) # Default: 1 hour
@@ -18,7 +19,7 @@ def main():
         current_ip4 = util.get_wan_ip4()
         current_ip6 = util.get_wan_ip6()
 
-        if not (current_ip4 == my_ipv4 or current_ip6 == my_ipv6):
+        if (current_ip4 != my_ipv4 or current_ip6 != my_ipv6):
             my_ipv4 = current_ip4
             my_ipv6 = current_ip6
 
@@ -28,6 +29,6 @@ def main():
         time.sleep(SLEEP_TIME_SECONDS)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     util.try_load_dotenv()
     main()
