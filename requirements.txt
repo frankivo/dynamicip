@@ -5,7 +5,7 @@ h11==0.16.0
 jh2==5.0.15
 niquests==3.21.3
 pycparser==3.12
-pyopenssl==26.4.0
+python-dotenv==1.2.4
 qh3==2.1.0
 urllib3-future==2.25.906
 wassima==2.1.5

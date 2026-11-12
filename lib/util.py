@@ -1,7 +1,9 @@
-from OpenSSL import crypto
 import base64
+
 import niquests
-import OpenSSL
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
+
 
 def try_load_dotenv():
     try:
@@ -23,7 +25,12 @@ def get_wan_ip6():
         return res["ip"]
 
 def sign_with_private_key(key: str, data: str) -> str:
-    pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, key.replace("\\n", "\n"))
-    sign = OpenSSL.crypto.sign(pkey, data, "sha512")
-    bytes = base64.b64encode(sign)
-    return bytes.decode('utf-8')
+    pkey = serialization.load_pem_private_key(
+        key.replace("\\n", "\n").encode(), password=None
+    )
+    signature = pkey.sign(
+        data.encode(),
+        padding.PKCS1v15(),
+        hashes.SHA512(),
+    )
+    return base64.b64encode(signature).decode("utf-8")
