@@ -11,20 +11,23 @@ def main():
         private_key = os.environ["KEY"],
         domain = os.environ["DOMAIN"],
         record = os.environ["DOMAIN_RECORD"],
-        login = os.environ["LOGIN"]
+        login = os.environ["LOGIN"],
     )
+    ipv6_enabled = os.getenv("ENABLE_IPV6", "true").lower() == "true"
+
     my_ipv4, my_ipv6 = ("127.0.0.1", "::1")
 
     while True:
         current_ip4 = util.get_wan_ip4()
-        current_ip6 = util.get_wan_ip6()
-
-        if (current_ip4 != my_ipv4 or current_ip6 != my_ipv6):
+        if (current_ip4 != my_ipv4):
             my_ipv4 = current_ip4
-            my_ipv6 = current_ip6
-
             dns.patch(my_ipv4)
-            dns.patch(my_ipv6)
+
+        if ipv6_enabled:
+            current_ip6 = util.get_wan_ip6()
+            if current_ip6 != my_ipv6:
+                my_ipv6 = current_ip6
+                dns.patch(my_ipv6)
 
         time.sleep(SLEEP_TIME_SECONDS)
 
